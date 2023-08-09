@@ -1,0 +1,19 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    float numero1, numero2, suma , division ;
+    cout<<"Ingresar numero1: ";
+    cin>>numero1;
+    cout<<"Ingrese numero2: ";
+    cin>>numero2;
+    
+    
+    cout<< "suma= "<<numero1+numero2<<endl;
+    cout<< "resta="<<numero1-numero2<<endl;
+    cout<< "division= "<<numero1/numero2<<endl;
+    cout<< "multiplicacion= "<<numero1*numero2<<endl;
+    return 0;
+}
