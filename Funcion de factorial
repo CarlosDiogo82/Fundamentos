@@ -1,0 +1,33 @@
+#include <iostream>
+#include "math.h"
+using namespace std;
+int factorial(int n);
+int main() {
+    int X, n;
+    cout << "Ingresa el valor de X: ";
+    cin >> X;
+    cout << "Ingresa el valor de n: ";
+    cin >> n;
+
+    double resultado = calcularSerie(X, n);
+
+    cout << "El resultado de la serie es: " << resultado << endl;
+
+    return 0;
+}
+// Función para calcular el factorial
+int factorial(int n) {
+    if (n == 0 || n == 1)
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
+// Función para calcular la serie
+double calcularSerie(int X, int n) {
+    double S = 0;
+    for (int i = 1; i <= n; i++) {
+        S += pow(X, i) / factorial(i);
+    }
+    return S;
+}
