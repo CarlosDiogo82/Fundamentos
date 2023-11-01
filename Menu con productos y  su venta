@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Función para agregar un producto y su venta al registro
+void agregarVenta(vector<string> &productos, vector<double> &ventas) {
+    string producto;
+    double venta;
+
+    cout << "Ingrese el nombre del producto: ";
+    cin.ignore();
+    getline(cin, producto);
+    cout << "Ingrese la venta realizada: ";
+    cin >> venta;
+
+    productos.push_back(producto);
+    ventas.push_back(venta);
+}
+
+// Función para calcular las ventas totales
+double calcularVentasTotales(const vector<double> &ventas) {
+    double total = 0;
+    for (double venta : ventas) {
+        total += venta;
+    }
+    return total;
+}
+
+int main() {
+    vector<string> productos;
+    vector<double> ventas;
+
+    int opcion;
+
+    do {
+        cout << "\nMenú de opciones:\n";
+        cout << "1. Agregar venta\n";
+        cout << "2. Calcular ventas totales\n";
+        cout << "3. Salir\n";
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                agregarVenta(productos, ventas);
+                break;
+            case 2:
+                cout << "Ventas totales realizadas: $" << calcularVentasTotales(ventas) << endl;
+                break;
+            case 3:
+                cout << "Saliendo del programa." << endl;
+                break;
+            default:
+                cout << "Opción no válida. Intente de nuevo." << endl;
+        }
+
+    } while (opcion != 3);
+
+    return 0;
+}
