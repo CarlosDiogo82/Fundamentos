@@ -1,0 +1,124 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct Usuario {
+    string nombre;
+    string contrasena;
+    string tipo;  // "ESTUDIANTE" o "ESPECIALISTA"
+    vector<string> areasDestacadas;  // áreas en las que destaca (MATEMATICAS, FISICA, QUIMICA)
+};
+
+bool usuarioRegistrado(const string& nombreUsuario, const Usuario usuarios[], int numUsuarios) {
+    for (int i = 0; i < numUsuarios; ++i) {
+        if (usuarios[i].nombre == nombreUsuario) {
+            return true; // El usuario está registrado
+        }
+    }
+    return false; // El usuario no está registrado
+}
+
+bool validarContrasena(const string& nombreUsuario, const string& contrasena, const Usuario usuarios[], int numUsuarios) {
+    for (int i = 0; i < numUsuarios; ++i) {
+        if (usuarios[i].nombre == nombreUsuario && usuarios[i].contrasena == contrasena) {
+            return true; // La contraseña es válida
+        }
+    }
+    return false;
+}
+
+int main() {
+    const int MAX_USUARIOS = 5;
+    Usuario usuarios[MAX_USUARIOS];
+    int numUsuariosRegistrados = 0;
+
+    while (true) {
+        cout << "1. Iniciar sesión\n";
+        cout << "2. Crear cuenta\n";
+        cout << "0. Salir\n";
+        cout << "Seleccione una opción: ";
+
+        int opcion;
+        cin >> opcion;
+
+        if (opcion == 1) {
+            // ... (código de inicio de sesión, sin cambios)
+        } else if (opcion == 2) {
+            if (numUsuariosRegistrados < MAX_USUARIOS) {
+                string nombreUsuario, contrasena, tipoUsuario;
+
+                cout << "Ingrese el nombre de usuario: ";
+                cin >> nombreUsuario;
+
+                if (!usuarioRegistrado(nombreUsuario, usuarios, numUsuariosRegistrados)) {
+                    cout << "Ingrese la contraseña: ";
+                    cin >> contrasena;
+
+                    cout << "Seleccione el tipo de usuario (1 para 'ESTUDIANTE' o 2 para 'ESPECIALISTA'): ";
+                    int tipo;
+                    cin >> tipo;
+
+                    if (tipo == 1) {
+                        usuarios[numUsuariosRegistrados] = {nombreUsuario, contrasena, "ESTUDIANTE", {}};
+                    } else if (tipo == 2) {
+                        // Pedir áreas en las que destaca
+                        vector<string> areas;
+                        cout << "Seleccione las áreas en las que destaca:\n";
+                        cout << "1. MATEMATICAS\n";
+                        cout << "2. FISICA\n";
+                        cout << "3. QUIMICA\n";
+                        cout << "4. TODAS LAS ANTERIORES\n";
+
+                        for (int i = 0; i < 3; ++i) {
+                            int opcionArea;
+                            cout << "Área " << i + 1 << ": ";
+                            cin >> opcionArea;
+
+                            switch (opcionArea) {
+                                case 1:
+                                    areas.push_back("MATEMATICAS");
+                                    break;
+                                case 2:
+                                    areas.push_back("FISICA");
+                                    break;
+                                case 3:
+                                    areas.push_back("QUIMICA");
+                                    break;
+                                case 4:
+                                    areas.push_back("MATEMATICAS");
+                                    areas.push_back("FISICA");
+                                    areas.push_back("QUIMICA");
+                                    break;
+                                default:
+                                    cout << "Opción no válida. Inténtelo de nuevo.\n";
+                                    i--;
+                                    break;
+                            }
+                        }
+
+                        usuarios[numUsuariosRegistrados] = {nombreUsuario, contrasena, "ESPECIALISTA", areas};
+                    } else {
+                        cout << "Tipo de usuario no válido. Inténtelo de nuevo.\n";
+                        continue;
+                    }
+
+                    numUsuariosRegistrados++;
+                    cout << "Cuenta creada con éxito. ¡Bienvenido, " << nombreUsuario << "!\n";
+                } else {
+                    cout << "El nombre de usuario ya está registrado. Inténtelo con otro nombre.\n";
+                }
+            } else {
+                cout << "Se ha alcanzado el número máximo de usuarios. No se pueden crear más cuentas.\n";
+            }
+        } else if (opcion == 0) {
+            cout << "Saliendo del programa. ¡Hasta luego!\n";
+            break;
+        } else {
+            cout << "Opción no válida. Inténtelo de nuevo.\n";
+        }
+    }
+
+    return 0;
+}
